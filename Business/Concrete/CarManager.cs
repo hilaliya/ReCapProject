@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public void Insert(Car car)
         {
             if (car.DailyPrice>0)
             {
@@ -41,14 +42,14 @@ namespace Business.Concrete
             
         }
 
-        public List<Car> GetAllByBrandId(int id)
+        public List<Car> GetAllById(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return _carDal.GetAll(i => i.CarId == id);
         }
 
         public List<Car> GetAllByColorId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return _carDal.GetAll(c => c.ColorId == id);
         }
 
         public List<Car> GetByDailyPrice(decimal min, decimal max)
@@ -58,13 +59,18 @@ namespace Business.Concrete
 
         public List<Car> GetByModelYear(string year)
         {
-            return _carDal.GetAll(p => p.ModelYear == year);
+            return _carDal.GetAll(m => m.ModelYear == year);
         }
 
         public void Update(Car car)
         {
             _carDal.Update(car);
             Console.WriteLine("Araba güncellendi");
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
         }
     }
 }
